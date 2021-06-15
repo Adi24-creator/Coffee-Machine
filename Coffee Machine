@@ -1,0 +1,27 @@
+from menu import Menu, MenuItem
+from coffee_maker import CoffeeMaker
+from money_machine import MoneyMachine 
+
+money_machine = MoneyMachine()
+coffee_maker = CoffeeMaker() 
+menu = Menu()
+
+loop = True
+
+while loop:
+  items = menu.get_items()
+  choice = input(f"What would you like to order? {items}")
+  if choice == "off":
+    loop == False
+  elif choice == "resources":
+    money_machine.report()
+    coffee_maker.report()
+
+  else:
+    drink = menu.find_drink(choice)
+    sufficent_ingredients = coffee_maker.is_resource_sufficient(drink)
+    sufficient_pay = money_machine.make_payment(drink.cost)
+    if sufficent_ingredients == True and sufficient_pay == True:
+      coffee_maker.make_coffee(drink)
+
+
